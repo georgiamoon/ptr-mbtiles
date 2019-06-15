@@ -38,8 +38,19 @@ map.on('load', function () {
             "line-cap": "round"
         },
         "paint": {
-            "line-color": "#ff69b4",
-            "line-width": 1
+            "line-color": "#333",
+            "line-opacity": 0.8,
+            "line-width": [
+                'interpolate',
+                ['linear'],
+                ['get', 'hops'],
+                0, .1,
+                10000, 1,
+                25000, 5,
+                50000, 7,
+                75000, 10,
+                100000, 15
+                ]
         }
     });
 });
