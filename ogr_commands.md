@@ -1,6 +1,6 @@
-## COMBO DATA
+## Commands
 
-### COUNTY
+### Prep
 
 xsv select '!WKT' results-20190616-022230.csv | \
   xsv stats | \
@@ -17,4 +17,4 @@ ogr2ogr -f GeoJSON /dev/stdout -oo KEEP_GEOM_COLUMNS=no results-20190616-022230.
 
 ## UPLOADING to MAPBOX
 
-mapbox upload --name 'MLab and FCC County' newamerica.usbb_county mbtiles/usbb_county.mbtiles
+mapbox upload --name 'PTR Test' newamerica.ptr_lines ptr_lines.mbtiles
