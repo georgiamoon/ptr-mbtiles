@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>M-Lab Paris Traceroutes</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+
+        .map-overlay {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<div class='map-overlay top'>
+    <div class='map-overlay-inner'>
+        <h2>M-Lab Paris Traceroutes</h2>
+        <h3>All 2019 hops. Width is enconding number of hops, color is showing min RTT.</h3>
+        
+    </div>
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibmV3YW1lcmljYSIsImEiOiIyM3ZnYUtrIn0.57fFgg_iM7S1wLH2GQC71g';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v10',
+    zoom: 1.5,
+    center: [0, 0]
+});
+
+map.on('load', function () {
+
+    map.addLayer({
+        "id": "terrain-data",
+        "type": "line",
+        "source": {
+            type: 'vector',
+            url: 'mapbox://newamerica.ptr_lines_2019'
+        },
+        "source-layer": "ptr_lines",
+        "layout": {
+            "line-join": "round",
+            "line-cap": "round"
+        },
+        "paint": {
+            "line-color": [
+                'interpolate',
+                ['linear'],
+                ['get', 'min_rtt'],
+                0, '#29BDB6',
+                5, '#9CFFFA',
+                10, '#82FFF9',
+                50, '#CAFAFD',
+                100, '#FFAD82',
+                300, '#B36237'
+                ],
+            "line-opacity": 0.25,
+            "line-width": [
+                'interpolate',
+                ['linear'],
+                ['get', 'hops'],
+                0, 1,
+                10000, 3,
+                25000, 5,
+                50000, 7,
+                75000, 10,
+                100000, 15,
+                500000, 20
+                ]
+        }
+    });
+});
+</script>
+
+</body>
+</html>
