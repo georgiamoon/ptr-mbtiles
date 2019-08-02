@@ -27,6 +27,14 @@ _Output to a directory_
 ogr2ogr -f GeoJSON /dev/stdout -oo KEEP_GEOM_COLUMNS=no one_day_points_07252019.csv | tippecanoe -e one_day -f -l one_day /dev/stdin -z6 --simplification=10 --detect-shared-borders --coalesce-densest-as-needed
 ```
 
+_just tippecanoe to a dir and more general_
+
+```
+tippecanoe -e [directory_name] -f -l [layer name] /dev/stdin -z6 --simplification=10 --detect-shared-borders --coalesce-densest-as-needed [input file name]
+```
+
+After tippecanoe > unzip the pbfs
+
 ## UPLOADING to MAPBOX
 
 mapbox upload --name 'PTR 2019' newamerica.ptr_lines_2019 ptr_lines_2019.mbtiles
