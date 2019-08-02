@@ -28,10 +28,16 @@
         <h2>M-Lab Paris Traceroutes</h2>
         <h3>Any hop through Africa in 2019. Width is enconding number of hops, color is showing min RTT.</h3>
         
+        <label for="slider">Time Period <abbr title="Choose the time period to show on the map.">?</abbr></label>
+        <label id='time_period'></label>
+        <input id='slider' type='range' />
     </div>
 </div>
 
 <script>
+
+/* MAPBOX DATA */
+
 mapboxgl.accessToken = 'pk.eyJ1IjoibmV3YW1lcmljYSIsImEiOiIyM3ZnYUtrIn0.57fFgg_iM7S1wLH2GQC71g';
 var map = new mapboxgl.Map({
     container: 'map',

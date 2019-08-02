@@ -1,2 +1,6 @@
 
 *.mbtiles
+*.pbf
+data/ptr_ptr_world_alltime_by_day.csv
+data/one_day_points_07252019.csv
+data/one_day_points_07252019.csvt
