@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["http://localhost:3000", "https://grafana.mlab-sandbox.measurementlab.net"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD", "DELETE"],
+      "maxAgeSeconds": 3600
+    }
+]
