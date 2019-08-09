@@ -7,19 +7,39 @@ Build container:
 
 Generate input data:
 
-    ./prep-geojson-input.sh
-
-Generate tiles:
-
-    docker run --net=host -w /data -v $PWD:/data -it ptr-mbtiles bash -c \
-	   "cat geo.json | tippecanoe -e one_day -f -l one_day /dev/stdin -z6 \
-	     --simplification=10 --detect-shared-borders \
-         --coalesce-densest-as-needed --no-tile-compression"
-
-Copy to GCS:
-
-    gsutil -m -h 'Cache-Control:private, max-age=0, no-transform' \
-	  cp -r one_day.html one_day gs://soltesz-mlab-sandbox/
+    docker run -e PROJECT=mlab-sandbox -v $PWD:/mlab-tiles \
+        -v ~/.config/gcloud:/root/.config/gcloud -it ptr-mbtiles \
+        ./prep-geojson-input.sh mlab-sandbox
 
 NOTE: if the html and tiles are served from different domains we'll need to
 apply a CORS policy to GCS.
+
+## CORS
+
+NOTE: may not be needed if served from an iframe.
+
+* create a GCS bucket for the tile data.
+* set defacl on bucket:
+
+  ```
+  $ gsutil defacl set public-read gs://soltesz-mlab-sandbox/
+  ```
+
+* set cors policy on bucket, so requests evaluate `Access-Control-Allow-Origin`
+  headers correctly.
+
+  ```
+  $ gsutil cors set cors.json  gs://soltesz-mlab-sandbox
+  ```
+
+  `cors.json` contains, a project-specific origin:
+  ```
+  [
+    {
+      "origin": ["http://localhost:4000", "https://grafana.mlab-sandbox.measurementlab.net"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD", "DELETE"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  ```
