@@ -8,9 +8,15 @@ SELECT
   APPROX_QUANTILES(web100_log_entry.snap.MinRTT, 101)[SAFE_ORDINAL(51)] AS min_rtt,
   CAST(connection_spec.client_geolocation.longitude * 1000 AS INT64) as longitude,
   CAST(connection_spec.client_geolocation.latitude * 1000 AS INT64) as latitude
+
 FROM
   `measurement-lab.ndt.downloads`
-WHERE partition_date = '2019-07-25'
+
+WHERE partition_date = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
   AND connection_spec.client_geolocation.longitude is not NULL
   AND connection_spec.client_geolocation.latitude is not NULL
-group by site, connection_spec.client_geolocation.longitude, connection_spec.client_geolocation.latitude
+
+GROUP BY
+  site,
+  connection_spec.client_geolocation.longitude,
+  connection_spec.client_geolocation.latitude
