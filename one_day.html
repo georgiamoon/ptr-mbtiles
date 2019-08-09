@@ -25,12 +25,7 @@
 
 <div class='map-overlay top'>
     <div class='map-overlay-inner'>
-        <h2>M-Lab Paris Traceroutes</h2>
-        <h3>Any hop through Africa in 2019. Width is enconding number of hops, color is showing min RTT.</h3>
-
-        <label for="slider">Time Period <abbr title="Choose the time period to show on the map.">?</abbr></label>
-        <label id='time_period'></label>
-        <input id='slider' type='range' />
+        <!-- TODO: add legend for rates and colors -->
     </div>
 </div>
 
@@ -47,13 +42,6 @@ var map = new mapboxgl.Map({
 });
 
 map.on('load', function () {
-
-    /*map.addLayer({
-        "id":"mlab-servers",
-        "type":"circle",
-        "source":{}
-
-    })*/
 
     map.addLayer({
         "id": "one_day_mlab",
@@ -74,12 +62,12 @@ map.on('load', function () {
                 'interpolate',
                 ['linear'],
                 ['get', 'download_Mbps'],
-                0, '#29BDB6',
-                5, '#9CFFFA',
-                10, '#82FFF9',
-                50, '#CAFAFD',
-                100, '#FFAD82',
-                300, '#B36237'
+                  0, '#bd0026',
+                  1, '#fd8d3c',
+                  5, '#ffffb2',
+                 10, '#d9f0a3',
+                 50, '#78c679',
+                100, '#006837'
                 ]
         }
     });
